@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/785/785116.png">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ForestGuard AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            ForestGuard AI
+
+        </div>
+
+        <div class="nav-links">
+
+            <a href="#">Home</a>
+
+            <a href="#dashboard">Dashboard</a>
+
+            <a href="#how">How It Works</a>
+
+            <a href="#about">About</a>
+
+        </div>
+
+    </nav>
+
+
+    <div class="overlay">
+
+        <!-- HERO SECTION -->
+
+        <section class="hero">
+
+            <h2>
+
+                AI-Based Forest Fire Monitoring & Early Warning System
+
+            </h2>
+
+            <p>
+
+                Real-time environmental monitoring and wildfire risk prediction
+                using Machine Learning and intelligent risk analysis.
+
+            </p>
+
+        </section>
+
+
+        <!-- MAIN DASHBOARD -->
+
+        <section class="main-container" id="dashboard">
+
+            <!-- LEFT PANEL -->
+
+            <div class="form-card">
+
+                <h2>Environmental Risk Analysis</h2>
+
+                <form action="/predict" method="POST">
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="temp"
+                        placeholder="Temperature (°C)"
+                        required>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="RH"
+                        placeholder="Humidity (%)"
+                        required>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="wind"
+                        placeholder="Wind Speed (km/h)"
+                        required>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="rain"
+                        placeholder="Rainfall (mm)"
+                        required>
+
+                    <button type="submit" id="predictBtn">
+
+                        Predict Fire Risk
+
+                    </button>
+
+                </form>
+
+
+                <!-- RESULT SECTION -->
+
+                {% if prediction_text %}
+
+                <div class="result-card {{ alert_class }}">
+
+                    <h3>{{ prediction_text }}</h3>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- ALERT MESSAGE -->
+
+                {% if alert_message %}
+
+                <div class="alert-info">
+
+                    {{ alert_message }}
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- RIGHT PANEL -->
+
+            <div class="monitor-card">
+
+                <div class="status-box">
+
+                    <span class="status-dot"></span>
+
+                    <span class="status-text">
+
+                        SYSTEM STATUS : ACTIVE
+
+                    </span>
+
+                </div>
+
+
+                <div class="date-time" id="dateTime"></div>
+
+
+                <h2>
+
+                    Wildfire Monitoring
+
+                    <br>
+
+                    <span class="console-text">Console</span>
+
+                </h2>
+
+
+                <!-- SHOW ONLY AFTER PREDICTION -->
+
+                {% if prediction_text %}
+
+                <div class="risk-score {{ alert_class }}">
+
+                    {% if alert_class == "high" %}
+
+                        <h1>90%</h1>
+
+                    {% elif alert_class == "medium" %}
+
+                        <h1>60%</h1>
+
+                    {% else %}
+
+                        <h1>20%</h1>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="risk-text">
+
+                    {{ prediction_text }}
+
+                </div>
+
+                {% endif %}
+
+
+                <div class="monitoring-section">
+
+                    <div class="monitor-item">
+
+                        <span>Temperature Sensor</span>
+
+                        <span class="online">ONLINE</span>
+
+                    </div>
+
+                    <div class="monitor-item">
+
+                        <span>Humidity Analysis</span>
+
+                        <span class="online">ACTIVE</span>
+
+                    </div>
+
+                    <div class="monitor-item">
+
+                        <span>Wind Monitoring</span>
+
+                        <span class="online">RUNNING</span>
+
+                    </div>
+
+                    <div class="monitor-item">
+
+                        <span>Rain Detection</span>
+
+                        <span class="online">STABLE</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+
+        <section class="how-it-works" id="how">
+
+            <h2>How It Works</h2>
+
+            <div class="steps-container">
+
+                <div class="step-card">
+
+                    <h3>1. Enter Data</h3>
+
+                    <p>
+
+                        Input environmental conditions like temperature,
+                        humidity, wind speed, and rainfall.
+
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>2. AI Analysis</h3>
+
+                    <p>
+
+                        The Machine Learning model analyzes wildfire
+                        probability using environmental patterns.
+
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>3. Risk Detection</h3>
+
+                    <p>
+
+                        The system classifies wildfire threats into
+                        Low, Medium, or High risk levels.
+
+                    </p>
+
+                </div>
+
+                <div class="step-card">
+
+                    <h3>4. Alert Generation</h3>
+
+                    <p>
+
+                        Real-time alerts are generated instantly
+                        and sent through n8n automation workflows.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <section class="features-section">
+
+            <h2>Core System Features</h2>
+
+            <div class="features-container">
+
+                <div class="feature-box">
+
+                    <h3>Real-Time Prediction</h3>
+
+                    <p>
+
+                        Instantly analyze wildfire probability
+                        using Machine Learning models.
+
+                    </p>
+
+                </div>
+
+                <div class="feature-box">
+
+                    <h3>Environmental Analysis</h3>
+
+                    <p>
+
+                        Monitor environmental conditions including
+                        temperature, humidity, wind, and rainfall.
+
+                    </p>
+
+                </div>
+
+                <div class="feature-box">
+
+                    <h3>Smart Risk Classification</h3>
+
+                    <p>
+
+                        Automatically classify wildfire threats
+                        into Low, Medium, and High risk levels.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STATS SECTION -->
+
+        <section class="stats-section">
+
+            <div class="stat-box">
+
+                <h1>95%</h1>
+
+                <p>Prediction Accuracy</p>
+
+            </div>
+
+            <div class="stat-box">
+
+                <h1>24/7</h1>
+
+                <p>Environmental Monitoring</p>
+
+            </div>
+
+            <div class="stat-box">
+
+                <h1>4+</h1>
+
+                <p>Environmental Parameters</p>
+
+            </div>
+
+            <div class="stat-box">
+
+                <h1>Real-Time</h1>
+
+                <p>Risk Detection</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT SECTION -->
+
+        <section class="about" id="about">
+
+            <h2>About This Project</h2>
+
+            <p>
+
+                ForestGuard AI is an intelligent wildfire monitoring
+                platform that uses Machine Learning and environmental
+                analysis to predict potential forest fire risks.
+
+                The system analyzes environmental parameters such as
+                temperature, humidity, wind speed, and rainfall
+                to provide real-time fire risk alerts and automated
+                emergency notification support.
+
+            </p>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <p>
+
+                Developed by Sanjana JV | ForestGuard AI
+
+            </p>
+
+            <p>
+
+                AI-Powered Wildfire Monitoring & Early Warning Platform
+
+            </p>
+
+        </footer>
+
+    </div>
+
+
+    <!-- LIVE DATE & TIME -->
+
+    <script>
+
+        function updateTime() {
+
+            const now = new Date();
+
+            document.getElementById("dateTime").innerHTML =
+                now.toLocaleString();
+
+        }
+
+        setInterval(updateTime, 1000);
+
+        updateTime();
+
+    </script>
+
+
+    <!-- BUTTON LOADING -->
+
+    <script>
+
+        const form = document.querySelector("form");
+
+        const btn = document.getElementById("predictBtn");
+
+        form.addEventListener("submit", () => {
+
+            btn.innerHTML = "Analyzing Risk...";
+
+            btn.disabled = true;
+
+        });
+
+    </script>
+
+</body>
+
+</html>
