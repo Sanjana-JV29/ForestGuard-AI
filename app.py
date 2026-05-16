@@ -9,7 +9,13 @@ app = Flask(__name__)
 # LOAD TRAINED ML MODEL
 # =====================================================
 
-model = joblib.load("forest_fire_model.pkl")
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+model_path = os.path.join(BASE_DIR, "forest_fire_model.pkl")
+
+model = joblib.load(model_path)
 
 # =====================================================
 # n8n WEBHOOK URL
